@@ -1,9 +1,10 @@
 package com.playtika.abtests;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.security.*;
+import java.security.MessageDigest;
 
+
+/* Do not modify this class without contacting Oded Rotem */
 public class TestAllocator
 {
         private BigInteger numVariants, hundred;
@@ -41,7 +42,7 @@ public class TestAllocator
         	return normalize(Input1) + normalize(Input2);
         }
 
-        public Integer GetAllocation(String UserToken)
+        public Integer GetAllocation(String UserToken) throws Exception
         {
             if ((samplingPercentage==100)||(getBucket(UserToken, samplingToken, hundred) < samplingPercentage) ) // if user falls into sample
             {
@@ -53,22 +54,16 @@ public class TestAllocator
             }
         }
 
-        private Integer getHashMod(String input, BigInteger Modolus)
+        private Integer getHashMod(String input, BigInteger Modolus) throws Exception
     	{
-            /* DO NOT MODIFY THIS BIT!! */
     		byte[] bytesOfMessage;
-			try {
-				bytesOfMessage = input.getBytes("ASCII");
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-				return -1;
-			}
+			bytesOfMessage = input.getBytes("ASCII");
     		byte[] thedigest = md5.digest(bytesOfMessage);
 
             return (new BigInteger(1, thedigest)).mod(Modolus).intValue();
     	}
 
-        private int getBucket(String UserToken, String BucketToken, BigInteger NumBuckets) 
+        private int getBucket(String UserToken, String BucketToken, BigInteger NumBuckets) throws Exception
         {
             String input = merge(UserToken,BucketToken);
             return getHashMod(input, NumBuckets);
