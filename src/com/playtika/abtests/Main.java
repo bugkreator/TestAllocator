@@ -5,10 +5,9 @@ import java.util.HashMap;
 
 public class Main {
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
-        String s = java.util.UUID.randomUUID().toString();
-        TestAllocator alloc = new TestAllocator(s,"", 2,50);
+        TestAllocator alloc = new TestAllocator(java.util.UUID.randomUUID().toString());
         HashMap<Integer, Integer> results = new HashMap<Integer,Integer>();
         Integer res,curr;
         for (Integer i = 0; i<100000; i+=1)

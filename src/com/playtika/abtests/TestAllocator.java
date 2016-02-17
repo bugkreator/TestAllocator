@@ -11,32 +11,29 @@ public class TestAllocator
         private String allocationToken, samplingToken;
         private MessageDigest md5;
 
-        private void initialize(String AllocationToken, String SamplingToken, Integer NumVariants, Integer SamplingPercentage)
+        private void initialize(String AllocationToken, String SamplingToken, Integer NumVariants, Integer SamplingPercentage) throws Exception
         {
-        	try 
-            {
-            	md5 = MessageDigest.getInstance("MD5");
-            }
-        	catch (Exception ex)
-        	{
-        		md5 = null;
-        	}
-        	
+            md5 = MessageDigest.getInstance("MD5");
             this.allocationToken = AllocationToken;
             this.samplingToken = SamplingToken;
             this.numVariants = new BigInteger(NumVariants.toString());
             this.hundred = new BigInteger("100");
             this.samplingPercentage = SamplingPercentage;
         }
+
+        public TestAllocator(String AllocationToken) throws Exception
+        {
+            this(AllocationToken, "", 2, 100); // defaults of 100% sampling with 2 variants. With no sampling, the sampling token is irrelevant
+        }
         
-        public TestAllocator(String AllocationToken, String SamplingToken, Integer NumVariants, Integer SamplingPercentage)
+        public TestAllocator(String AllocationToken, String SamplingToken, Integer NumVariants, Integer SamplingPercentage) throws Exception
         {
         	initialize(AllocationToken, SamplingToken,NumVariants, SamplingPercentage);
         }
 
         private String normalize(String s)
         {
-            return s.toLowerCase().trim().replaceAll("-", "");
+            return s.toLowerCase().trim();
         }
         
         private String merge(String Input1, String Input2)
