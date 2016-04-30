@@ -34,7 +34,7 @@ public class TestAllocator
 
         private String normalize(String s)
         {
-            return s.toLowerCase().trim();
+            return s.toLowerCase().trim().replace("-","");
         }
         
         private String merge(String Input1, String Input2)
